@@ -1,8 +1,8 @@
 package com.example.rest.api;
 
 import com.example.domain.Country;
+import com.example.rest.resource.CountryPageResource;
 import com.example.rest.resource.CountryResource;
-import com.example.rest.resource.PageResource;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Page;
 import java.util.Optional;
@@ -37,7 +37,7 @@ public class CountryApi {
     @Operation(
             summary = "Retrieve a page of countries",
             description = "Retrieve a page of countries using the provided filtering, pagination and sorting parameters.")
-    public PageResource<CountryResource> getCountries(
+    public CountryPageResource getCountries(
             @Parameter(
                     description = "The page index to retrieve.",
                     required = false,
@@ -64,7 +64,7 @@ public class CountryApi {
         var totalPages = query.pageCount();
         var hasNextPage = query.hasNextPage();
         var hasPreviousPage = query.hasPreviousPage();
-        return new PageResource<>(countryResources, totalElements, totalPages, hasNextPage, hasPreviousPage);
+        return new CountryPageResource(countryResources, totalElements, totalPages, hasNextPage, hasPreviousPage);
     }
 
     @GET
